@@ -1,4 +1,4 @@
-{{- if .personal }}
+{{- if .personal -}}
 Host *
 	{{- if eq .chezmoi.os "darwin" }}
 	AddKeysToAgent yes
@@ -6,30 +6,49 @@ Host *
 
 Host github.com
 	User git
-	Hostname github.com
+	HostName github.com
 	IdentityFile ~/.ssh/github
 
 Host tokyo
 	User james
-	Hostname tokyo.home.arpa
+	HostName tokyo.home.arpa
 	PubKeyAuthentication yes
 	IdentityFile ~/.ssh/homenet-norton
 
 Host nas
 	User james
-	Hostname nas.home.arpa
+	HostName nas.home.arpa
 	PubKeyAuthentication yes
 	IdentityFile ~/.ssh/homenet-norton
 
 Host crashserver
 	User james
-	Hostname crash.etterna.dev
+	HostName crash.etterna.dev
 	PubKeyAuthentication yes
 	IdentityFile ~/.ssh/crash.etterna.dev
 
+Host pi-00
+	User james
+	HostName pi-00.home.arpa
+	IdentityFile ~/.ssh/homenet-norton
+
 Host kevin
 	User james
-	Hostname {{ (bitwardenFields "item" "9c931028-7d6e-4f8c-ad92-c75fab672155").ip.value }}
+	HostName {{ (bitwardenFields "item" "9c931028-7d6e-4f8c-ad92-c75fab672155").ip.value }}
 	IdentityFile ~/.ssh/kevin
 
-{{ end }}
+Host ros2
+    HostName 192.168.1.11
+    User ubuntu
+
+Host crater
+	HostName 192.168.1.6
+    User crater
+    IdentityFile ~/.ssh/crater
+    ForwardX11 yes
+
+Host ncrater
+    HostName 192.168.1.7
+    User crater
+    IdentityFile ~/.ssh/crater
+{{ end -}}

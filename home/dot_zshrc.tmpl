@@ -2,6 +2,7 @@
 eval "$(starship init zsh)"     # Activate starship
 eval "$(fzf --zsh)"             # Activate fzf
 eval "$(direnv hook zsh)"       # Activate direnv
+eval "$(brew shellenv --zsh)"   # Activate homebrew
 
 # Helpers
 include () { [[ -f "$1" ]] && source "$1" }

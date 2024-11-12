@@ -30,7 +30,7 @@ return {
             "clangd",
             "yamlls",
             "cmake",
-            "tsserver",
+            "ts_ls",
             "tailwindcss",
             "marksman",
         }

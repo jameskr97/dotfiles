@@ -18,20 +18,23 @@ function source_if_exists {
 add_to_path "/Users/james/Library/Application Support/JetBrains/Toolbox/scripts" # for JetBrains Toolbox
 {{- end }}
 add_to_path "/opt/homebrew/bin"
-add_to_path "/usr/local/opt/llvm/bin"
 add_to_path "/usr/local/bin"
 add_to_path "$HOME/.cargo/bin"
 add_to_path "/opt/homebrew/sbin"
 add_to_path "/Users/james/.local/bin"
+add_to_path "/opt/homebrew/opt/llvm/bin"
+add_to_path "/opt/user-builds/radare2/bin"
 source_if_exists "$HOME/.cargo/env"
 source_if_exists "/Users/james/.bun/_bun"
 
 # Environment variable exports
 ## Misc variables
+export VAULT_ADDR="https://vault.norton.jameskr.dev:444"
 export EDITOR="$(which nvim)"
 export GPG_TTY=$(tty)
 export XDG_CONFIG_HOME="$HOME/.config"
 export OPENSSL_ROOT_DIR="$(brew --prefix openssl)"
+export VCPKG_ROOT="$HOME/.local/vcpkg"
 
 ## Homebrew
 {{- if eq .chezmoi.os "darwin" }}
