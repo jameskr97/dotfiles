@@ -1,26 +1,25 @@
 # dotfiles
 Managed by [chezmoi](https://www.chezmoi.io/).
 
-## Getting started
+## Setup
+
+I use chezmoi + nix + homebrew.
+
 Bootstrapping required bvefore before running `chezmoi apply`. Here are the commands I run on a newly installed debian system.
 
+First install [determinate.systems nix](https://determinate.systems/nix-installer/) and [homebrew](https://brew.sh/)
 ```bash
-# Update system and install curl
-$ sudo apt update && sudo apt upgrade
-$ sudo apt install curl
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" # just for now so we don't have to restart terminal
+```
 
-# Install homebrew
-$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-$ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# Install chezmoi (at time of writing chezmoi in homebrew causes a segfault)
-# Latest instructions at https://www.chezmoi.io/install/
-$ curl -L https://github.com/twpayne/chezmoi/releases/download/v2.33.1/chezmoi_2.33.1_linux_amd64.deb -o chezmoi.deb
-$ sudo dpkg -i chezmoi.deb
-
-# Init and apply chezmoi
-$ chezmoi init jameskr97
-$ chezmoi apply # installs packages, fails after trying to access bitwarden
+Second, clone this repo to the place chezmoi expects the repo to be
+```bash
+git clone https://github.com/jameskr97/dotfiles.git ~/.local/share/chezmoi
+cd ~/.local/share/chezmoi/nix
+nix run nix-darwin -- switch --flake .#delta 
+```
 
 # Open bitwarden vault
 $ bw config server bitwarden.example.com
