@@ -1,31 +1,36 @@
-# dotfiles
-Managed by [chezmoi](https://www.chezmoi.io/).
+![Header](./img/banner.png)
 
-## Setup
 
-I use chezmoi + nix + homebrew.
-
-Bootstrapping required bvefore before running `chezmoi apply`. Here are the commands I run on a newly installed debian system.
-
-First install [determinate.systems nix](https://determinate.systems/nix-installer/) and [homebrew](https://brew.sh/)
+## setup instructions
+### 1. Install chezmoi and apply
 ```bash
-curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" # just for now so we don't have to restart terminal
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply jameskr97
 ```
 
-Second, clone this repo to the place chezmoi expects the repo to be
+### 2. Install Homebrew and packages
 ```bash
-git clone https://github.com/jameskr97/dotfiles.git ~/.local/share/chezmoi
-cd ~/.local/share/chezmoi/nix
-nix run nix-darwin -- switch --flake .#delta 
+cd ~/.local/share/chezmoi
+make brew-install
+make setup
 ```
 
-# Open bitwarden vault
-$ bw config server bitwarden.example.com
-$ bw login
-$ bw unlock 
+Restart your terminal (or source ~/.zprofile) to get brew in PATH.
 
-# Apply chezmoi again, successfully this time!
-$ chezmoi apply
+### 3. Unlock Bitwarden (for SSH keys)
+```bash
+bw config server bitwarden.example.com
+bw login
+bw unlock
+export BW_SESSION="..."  # copy from output
 ```
+
+### 4. Re-apply dotfiles (to get SSH keys)
+```bash
+chezmoi apply
+```
+
+## Makefile Targets
+
+- `make brew-install` - Install Homebrew
+- `make setup` - Run Brewfile
+- `make uninstall` - Remove packages not in Brewfile
