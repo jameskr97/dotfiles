@@ -1,12 +1,38 @@
 # vim: set ft=bash :
-eval "$(starship init zsh)"     # Activate starship
 eval "$(fzf --zsh)"             # Activate fzf
 eval "$(direnv hook zsh)"       # Activate direnv
-eval "$(brew shellenv --zsh)"   # Activate homebrew
 
-# Helpers
-include () { [[ -f "$1" ]] && source "$1" }
-log_info () { echo "\t\e[36m*\e[0m $1"}
+# Prompt
+autoload -Uz vcs_info
+abbrev_path() {
+    local p=${PWD/#$HOME/\~}
+    local parts=(${(s:/:)p})
+    local result=""
+    for ((i=1; i<${#parts[@]}; i++)); do
+        local part="${parts[$i]}"
+        if [[ "$part" == .* ]]; then
+            result+="${part:0:2}/"
+        else
+            result+="${part:0:1}/"
+        fi
+    done
+    result+="${parts[-1]}"
+    echo "$result"
+}
+precmd() {
+    vcs_info
+    ABBREV_PWD=$(abbrev_path)
+    # cmd duration
+    if [[ -n $CMD_START ]]; then
+        local elapsed=$(( SECONDS - CMD_START ))
+        (( elapsed > 2 )) && CMD_DURATION="${elapsed}s " || CMD_DURATION=""
+        unset CMD_START
+    fi
+}
+preexec() { CMD_START=$SECONDS }
+zstyle ':vcs_info:git:*' formats '%b '
+setopt PROMPT_SUBST
+PROMPT='%F{green}[%n@%m]%f %F{blue}${ABBREV_PWD}%f %F{8}${vcs_info_msg_0_}%f%F{red}${CMD_DURATION}%f%(?.%F{magenta}.%F{red})❯%f '
 
 # History
 setopt CORRECT                      # Attempt to correct a command when you enter it incorrectly
@@ -21,56 +47,20 @@ setopt HIST_IGNORE_DUPS             # Do not write events to history that are du
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks from each command line being added to history
 setopt HIST_FIND_NO_DUPS            # When searching history don't display results already cycled through twice
 
-# aliases
-## command aliases
+# Aliases
 alias ls="eza"
 alias ll="eza -l"
 alias la="eza -laa"
-alias lsh="eza -ld .?*"
 alias tree="eza --tree"
-alias vim="nvim"
-alias k="kubectl"
 
-## docker aliases
-{{ if lookPath "docker-compose" -}}
-    alias dc="docker-compose"
-{{- else -}}
-    alias dc="docker compose"
-{{- end }}
-alias dcul='f(){ dc up -d "$1"; dc logs -f "$1"; unset -f f; }; f'
-alias dcr='f(){ dc restart "$1"; dc logs -f "$1"; unset -f f; }; f'
-alias dcremake='f(){ dc stop "$1"; dc rm -f "$1"; dc up -d "$1"; dc logs -f "$1"; unset -f f; }; f'
-alias dcdown='f(){ dc stop "$1"; dc rm -f "$1"; unset -f f; }; f'
-alias dcl='f(){ dc logs -f --tail 30 "$1"; unset -f f; }; f'
-
-## johnny decimal filesystem
-{{ if eq .chezmoi.hostname "nas" }}alias cdf='f(){ pushd /srv/storage/*/*/${1}*; unset -f f; }; f'
-{{- else }}alias cdf='f(){ pushd /mnt/nas/*/*/${1}*; unset -f f; }; f'
-{{- end }}
-
-## cd aliases
 alias ..="cd .."
 alias ...="cd ../.."
 
 {{- if eq .chezmoi.os "darwin" }}
-## os-specific aliases
 alias flushdns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
 {{- end }}
 
-{{ if eq .chezmoi.os "linux" -}}
-# keychain for linux and wsl
-{{ if lookPath "keychain" }}
-  /usr/bin/keychain --nogui -q --dir $HOME/.config/keychain
-{{ else }}
-  log_info "keychain not installed"
-{{ end }}
-include $HOME/.config/keychain/{{ .chezmoi.hostname }}-sh
-
-include /home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-# zsh-compltions
-{{- end }}
-
-# functions
+# Functions
 bw-open() {
   if ! bw login --check > /dev/null
   then
@@ -85,6 +75,7 @@ bw-open() {
   export BW_SESSION
 }
 
+{{- if eq .chezmoi.hostname "nas" }}
 snapraid_cmd=$(which snapraid)
 snapraid() {
   if [[ $1 == "smart" ]]; then
@@ -93,3 +84,4 @@ snapraid() {
       command snapraid "$@"
   fi
 }
+{{- end }}

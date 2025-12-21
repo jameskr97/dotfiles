@@ -1,7 +1,6 @@
-{{- if .personal -}}
 Host *
-	{{- if eq .chezmoi.os "darwin" }}
 	AddKeysToAgent yes
+	{{- if eq .chezmoi.os "darwin" }}
 	UseKeychain yes{{- end }}
 
 Host github.com
@@ -9,46 +8,12 @@ Host github.com
 	HostName github.com
 	IdentityFile ~/.ssh/github
 
-Host tokyo
-	User james
-	HostName tokyo.home.arpa
-	PubKeyAuthentication yes
-	IdentityFile ~/.ssh/homenet-norton
-
 Host nas
-	User james
-	HostName nas.home.arpa
-	PubKeyAuthentication yes
-	IdentityFile ~/.ssh/homenet-norton
+	HostName fileserver
 
-Host crashserver
-	User james
-	HostName crash.etterna.dev
-	PubKeyAuthentication yes
-	IdentityFile ~/.ssh/crash.etterna.dev
-
-Host pi-00
-	User james
-	HostName pi-00.home.arpa
-	IdentityFile ~/.ssh/homenet-norton
-
+{{- if .personal }}
 Host kevin
 	User james
 	HostName {{ (bitwardenFields "item" "9c931028-7d6e-4f8c-ad92-c75fab672155").ip.value }}
 	IdentityFile ~/.ssh/kevin
-
-Host ros2
-    HostName 192.168.1.11
-    User ubuntu
-
-Host crater
-	HostName 192.168.1.6
-    User crater
-    IdentityFile ~/.ssh/crater
-    ForwardX11 yes
-
-Host ncrater
-    HostName 192.168.1.7
-    User crater
-    IdentityFile ~/.ssh/crater
-{{ end -}}
+{{- end }}

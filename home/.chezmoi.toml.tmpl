@@ -1,41 +1,6 @@
-{{/*vars defined to determine how dotfiles are setup*/}}
-
-{{- $hostname := .chezmoi.hostname -}}
-{{- $personal := false -}} {{/* should get secrets */}}
-{{- $packages := false -}} {{/* should install packages */}}
-{{- $nas      := false -}} {{/* true if server is nas */}}
-{{- $symbol   := false -}} {{/* symbol for cli */}}
-
-{{/* taken from gh/twpayne/dotfiles */}}
-{{- $osID := .chezmoi.os -}}
-{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
-{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
-{{- end -}}
-
-{{- /* green letter for each server */ -}}
-{{- if eq $hostname "BigDelta" -}}
-{{-     $symbol = "δ" -}}
-{{- else -}}
-{{-     $symbol = "Ξ" -}}
-{{- end -}}
-
-{{/* include list of known system, and ask if personal for all other systems */}}
-{{- if eq $hostname "Theta" "Lambda" "nas" -}}
-{{-     $personal = true -}}
-{{- else -}}
-{{-     $personal = promptBool "personal" -}}
-{{- end -}}
-
-{{- if eq $hostname "nas" -}}
-{{-     $nas = true -}}
-{{- end -}}
-
-
-{{- $packages = promptBool "Install pacakges" -}}
+{{- $personal := promptBool "personal" -}}
+{{- $nas := eq .chezmoi.hostname "nas" -}}
 
 [data]
     personal = {{ $personal }}
-    packages = {{ $packages }}
     nas = {{ $nas }}
-    osid = {{ $osID | quote }}
-    symbol = {{ $symbol | quote }}

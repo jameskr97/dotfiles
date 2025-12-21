@@ -1,57 +1,29 @@
 # vim: set ft=bash :
 
 function add_to_path {
-  if [[ ":$PATH:" != *":$1:"* ]]; then
+  if [[ -d "$1" && ":$PATH:" != *":$1:"* ]]; then
     PATH="$1:$PATH"
     export PATH
   fi
 }
 
-function source_if_exists {
-  if [ -f "$1" ]; then
-    source "$1"
-  fi
-}
-
 # Path Modification
-{{ if eq .chezmoi.os "darwin" -}}
-add_to_path "/Users/james/Library/Application Support/JetBrains/Toolbox/scripts" # for JetBrains Toolbox
-{{- end }}
-add_to_path "/opt/homebrew/bin"
-add_to_path "/usr/local/bin"
-add_to_path "$HOME/.cargo/bin"
+{{- if eq .chezmoi.os "darwin" }}
+add_to_path "/opt/homebrew/bin"       # Apple Silicon
 add_to_path "/opt/homebrew/sbin"
-add_to_path "/Users/james/.local/bin"
-add_to_path "/opt/homebrew/opt/llvm/bin"
-add_to_path "/opt/user-builds/radare2/bin"
-source_if_exists "$HOME/.cargo/env"
-source_if_exists "/Users/james/.bun/_bun"
+add_to_path "/usr/local/bin"          # Intel Mac
+add_to_path "/usr/local/sbin"
+add_to_path "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
+{{- end }}
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 # Environment variable exports
-## Misc variables
-export VAULT_ADDR="https://vault.norton.jameskr.dev:444"
-export EDITOR="$(which nvim)"
-export GPG_TTY=$(tty)
+export EDITOR="$(which vim)"
 export XDG_CONFIG_HOME="$HOME/.config"
-export OPENSSL_ROOT_DIR="$(brew --prefix openssl)"
-export VCPKG_ROOT="$HOME/.local/vcpkg"
 
 ## Homebrew
-{{- if eq .chezmoi.os "darwin" }}
-export HOMEBREW_CASK_OPTS="--appdir=~/Applications --fontdir=/Library/Fonts"
-{{- end }}
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_EMOJI=1
-
-## python virtualenvironments
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/opt/homebrew/bin/python3
-source_if_exists "/opt/homebrew/bin/virtualenvwrapper.sh"
-
-if [ -f "$HOME/bun" ]; then
-    export BUN_INSTALL="$HOME/.bun"
-    add_to_path "$BUN_INSTALL/bin"
-fi
 
 {{ if eq .chezmoi.os "linux" -}}
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
