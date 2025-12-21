@@ -1,6 +1,9 @@
 # vim: set ft=bash :
 eval "$(fzf --zsh)"             # Activate fzf
 eval "$(direnv hook zsh)"       # Activate direnv
+{{- if eq .chezmoi.os "linux" }}
+eval "$(keychain --eval --quiet --agents ssh)"
+{{- end }}
 
 # Prompt colors per host
 {{- $hostcolor := "green" }}
