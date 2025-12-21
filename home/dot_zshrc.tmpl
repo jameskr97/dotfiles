@@ -2,6 +2,18 @@
 eval "$(fzf --zsh)"             # Activate fzf
 eval "$(direnv hook zsh)"       # Activate direnv
 
+# Prompt colors per host
+{{- $hostcolor := "green" }}
+{{- if eq .chezmoi.hostname "m3max" }}
+{{-   $hostcolor = "cyan" }}
+{{- else if eq .chezmoi.hostname "crashserver" }}
+{{-   $hostcolor = "red" }}
+{{- else if eq .chezmoi.hostname "fileserver" "nas" }}
+{{-   $hostcolor = "yellow" }}
+{{- else if eq .chezmoi.hostname "tokyo-server" }}
+{{-   $hostcolor = "magenta" }}
+{{- end }}
+
 # Prompt
 autoload -Uz vcs_info
 abbrev_path() {
@@ -32,7 +44,7 @@ precmd() {
 preexec() { CMD_START=$SECONDS }
 zstyle ':vcs_info:git:*' formats '%b '
 setopt PROMPT_SUBST
-PROMPT='%F{green}[%n@%m]%f %F{blue}${ABBREV_PWD}%f %F{8}${vcs_info_msg_0_}%f%F{red}${CMD_DURATION}%f%(?.%F{magenta}.%F{red})❯%f '
+PROMPT='%F{ {{- $hostcolor -}} }[%n@%m]%f %F{blue}${ABBREV_PWD}%f %F{8}${vcs_info_msg_0_}%f%F{red}${CMD_DURATION}%f%(?.%F{magenta}.%F{red})❯%f '
 
 # History
 setopt CORRECT                      # Attempt to correct a command when you enter it incorrectly
