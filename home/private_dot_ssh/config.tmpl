@@ -1,3 +1,7 @@
+{{ if eq .chezmoi.hostname "m3max" -}}
+Include ~/.orbstack/ssh/config
+{{- end }}
+
 Host *
 	AddKeysToAgent yes
 	{{- if eq .chezmoi.os "darwin" }}

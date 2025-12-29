@@ -31,6 +31,9 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{- end }}
 
 {{ if eq .chezmoi.hostname "m3max" -}}
+# for orbstack only
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
 # borgmatic passphrase from Keychain
 export BORG_PASSCOMMAND="security find-generic-password -a borgmatic -s borg-repo -w"
 {{ end -}}
