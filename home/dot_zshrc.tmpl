@@ -21,8 +21,15 @@ eval "$(keychain --eval --quiet --agents ssh)"
 autoload -Uz vcs_info
 abbrev_path() {
     local p=${PWD/#$HOME/\~}
+    # Handle root directory
+    if [[ "$p" == "/" ]]; then
+        echo "/"
+        return
+    fi
     local parts=(${(s:/:)p})
     local result=""
+    # Add leading slash for absolute paths (not ~)
+    [[ "$p" == /* ]] && result="/"
     for ((i=1; i<${#parts[@]}; i++)); do
         local part="${parts[$i]}"
         if [[ "$part" == .* ]]; then
