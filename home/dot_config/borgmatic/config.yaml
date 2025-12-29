@@ -1,0 +1,64 @@
+source_directories:
+    - /Users/james
+
+repositories:
+    - path: ssh://nas/mnt/ssd-1tb/borgmatic/m3max
+      label: nas
+
+exclude_patterns:
+    # macOS system
+    - '*/Library'
+    - '*/Pictures/Photos Library.photoslibrary'
+    - '*/Music/Music Library.musiclibrary'
+    - '*/Movies/TV/TV Library.tvlibrary'
+    - '*/Movies/TV/Media.localized'
+    - '*/.DS_Store'
+    - '*/.localized'
+    - '*/OrbStack'
+
+    # Git repos (already on remote)
+    - '*/Projects.Git'
+
+    # Dot-directories (caches, regenerable)
+    - '*/.*'
+
+    # Package managers / build artifacts
+    - '*/node_modules'
+    - '*/venv'
+    - '*/__pycache__'
+    - '*/dist'
+    - '*/build'
+    - '*/target'
+    - '*/.next'
+    - '*/.nuxt'
+
+    # Large binaries
+    - '*.iso'
+    - '*.img'
+    - '*.dmg'
+    - '*.pyc'
+
+    # Downloads (temporary)
+    - '*/Downloads'
+
+exclude_if_present:
+    - .nobackup
+
+keep_hourly: 24
+keep_daily: 7
+keep_weekly: 4
+keep_monthly: 6
+
+commands:
+    - before: action
+      when: [create]
+      run:
+        - ~/.config/borgmatic/check-large-files.py
+    - after: action
+      when: [create]
+      states: [finish]
+      run:
+        - ~/.config/borgmatic/notify-complete.sh
+    - after: error
+      run:
+        - ~/.config/borgmatic/notify-error.sh "{error}" "{output}"

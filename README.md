@@ -29,8 +29,16 @@ export BW_SESSION="..."  # copy from output
 chezmoi apply
 ```
 
+### 5. Setup borgmatic backups (m3max only)
+```bash
+make borgmatic-setup
+```
+This pulls the passphrase from Bitwarden (`borgmatic - m3max`), stores it in macOS Keychain, and initializes the borg repo.
+
 ## Makefile Targets
 
 - `make brew-install` - Install Homebrew
 - `make setup` - Run Brewfile
 - `make uninstall` - Remove packages not in Brewfile
+- `make borgmatic-setup` - Setup borgmatic backups (m3max only)
+- `make borgmatic-test` - Test borgmatic with dry-run

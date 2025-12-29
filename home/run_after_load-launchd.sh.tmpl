@@ -1,0 +1,7 @@
+#!/bin/bash
+{{ if ne .chezmoi.hostname "m3max" -}}
+exit 0
+{{ end -}}
+# Reload borgmatic launchd job
+launchctl unload ~/Library/LaunchAgents/com.borgmatic.backup.plist 2>/dev/null
+launchctl load ~/Library/LaunchAgents/com.borgmatic.backup.plist

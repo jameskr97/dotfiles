@@ -1,0 +1,6 @@
+# Borgmatic backup config - only apply on m3max
+# (files listed here are IGNORED, so we ignore them on non-m3max hosts)
+{{ if ne .chezmoi.hostname "m3max" }}
+.config/borgmatic/**
+Library/LaunchAgents/com.borgmatic.backup.plist
+{{ end }}

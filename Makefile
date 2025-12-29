@@ -13,3 +13,15 @@ update:
 update-force:
 	git fetch --all
 	git reset --hard origin/main
+
+# Borgmatic backup setup (m3max only)
+borgmatic-setup:
+	@echo "Pulling borg passphrase from Bitwarden..."
+	@pass=$$(bw get password "borgmatic - m3max") && \
+	security add-generic-password -a borgmatic -s borg-repo -U -w "$$pass" && \
+	echo "Passphrase stored in Keychain." && \
+	BORG_PASSPHRASE="$$pass" borgmatic init --encryption repokey && \
+	echo "Done. Backups will run hourly at :00."
+
+borgmatic-test:
+	borgmatic create --verbosity 1 --dry-run
