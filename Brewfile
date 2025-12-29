@@ -36,7 +36,13 @@ if OS.mac?
   cask "jetbrains-toolbox"  # IDE manager
   cask "betterdisplay"      # Display managemen
   cask "claude"             # AI Assistant
+  cask "tailscale"
   cask "obsidian"
+  cask "bitwarden"
+  cask "obs"
+
+  # coding
+  cask "vscodium"
 
   # fonts
   cask "font-m-plus-code-latin"
@@ -56,6 +62,7 @@ if OS.mac?
   # paid
   cask "imazing"
   cask "mouseless"
+  cask "claude-code"
 
   # misc
   cask "raycast"
@@ -65,6 +72,7 @@ if OS.mac?
   cask "slack"
   cask "cyberduck"
   cask "balenaetcher"
+  cask "keyboardcleantool"
 
   # media
   cask "plex"
