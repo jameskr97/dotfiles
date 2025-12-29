@@ -1,4 +1,10 @@
-# CLI tools
+# taps
+tap "oven-sh/bun"
+
+## tap brews
+brew "bun"
+
+# cli tools
 ## modern cli tools (things to alias)
 brew "eza"           # Modern ls replacement
 brew "zoxide"        # Smarter cd command
@@ -17,12 +23,13 @@ brew "pwgen"         # Password generator
 brew "xh"            # Modern curl replacement
 brew "direnv"        # Directory-based env vars
 brew "tmux"          # Terminal multiplexer
-brew "lazydocker"
+brew "lazydocker"    # docker tui
+brew "lnav"          # logfile navigator
+brew "asciinema"     # cli recorder
 
 # macOS apps
 if OS.mac?
   # essential
-  cask "mouseless"
   cask "iterm2"             # Terminal emulator
   cask "arc"                # Browser
   cask "orbstack"           # Docker
@@ -46,13 +53,21 @@ if OS.mac?
   cask "discord"
   cask "telegram"
 
+  # paid
+  cask "imazing"
+  cask "mouseless"
+
   # misc
   cask "raycast"
   cask "affinity"
   cask "raspberry-pi-imager"
   cask "angry-ip-scanner"
+  cask "slack"
+  cask "cyberduck"
+  cask "balenaetcher"
 
   # media
   cask "plex"
   cask "mpv"
+  cask "spotify"
 end
