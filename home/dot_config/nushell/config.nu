@@ -1,5 +1,9 @@
 $env.config.show_banner = false
 
+# Rust
+use std/util "path add"
+path add $"($env.HOME)/.cargo/bin"
+
 # Abbreviate path (e.g., ~/.local/share/chezmoi -> ~/.l/s/chezmoi)
 def abbrev_path [] {
     let home = $env.HOME
