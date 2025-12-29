@@ -1,8 +1,5 @@
-setup: brew-install
-	brew bundle
-
-uninstall:
-	brew bundle cleanup --force
+sync: brew-install
+	brew bundle --cleanup
 
 brew-install:
 	@command -v brew >/dev/null || /bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
