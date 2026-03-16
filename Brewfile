@@ -1,51 +1,78 @@
 # taps
 tap "oven-sh/bun"
+tap "filosottile/musl-cross"
+tap "nikitabobko/tap"
 
-## tap brews
+# brews from taps
 brew "bun"
+brew "musl-cross"
+cask "aerospace"
 
-# cli tools
-## modern cli tools (things to alias)
-brew "eza"           # Modern ls replacement
-brew "zoxide"        # Smarter cd command
-brew "duf"           # Modern df replacement
+# modern cli replacements
+brew "eza"           # ls
+brew "zoxide"        # cd
+brew "duf"           # df
+brew "xh"            # curl
 
-## cli apps
-brew "lazygit"       # Terminal UI for git
-brew "nushell"       # Modern structured shell
-brew "tldr"          # Simplified man pages
+# shell & terminal
+brew "nushell"
+brew "tmux"
+brew "fzf"
+brew "direnv"
 
-## tools
-brew "bitwarden-cli" # Password manager CLI
-brew "fzf"           # Fuzzy finder
-brew "gh"            # GitHub CLI
-brew "pwgen"         # Password generator
-brew "xh"            # Modern curl replacement
-brew "direnv"        # Directory-based env vars
-brew "tmux"          # Terminal multiplexer
-brew "lazydocker"    # docker tui
-brew "lnav"          # logfile navigator
-brew "asciinema"     # cli recorder
+# tui apps
+brew "lazygit"
+brew "lazydocker"
+brew "lnav"
+
+# dev tools
+brew "git"
+brew "git-lfs"
+brew "gh"
+brew "cmake"
+brew "binaryen"      # rust wasm
+brew "uv"
+brew "pipx"
+brew "typst"
+brew "julia"
+brew "postgresql@18"
+
+# utilities
+brew "chezmoi"
+brew "bitwarden-cli"
+brew "pwgen"
+brew "tldr"
+brew "asciinema"
+brew "borgbackup"
+brew "borgmatic"
 
 # macOS apps
 if OS.mac?
-  # essential
-  cask "iterm2"             # Terminal emulator
-  cask "arc"                # Browser
-  cask "orbstack"           # Docker
-  cask "jetbrains-toolbox"  # IDE manager
-  cask "betterdisplay"      # Display managemen
-  cask "claude"             # AI Assistant
-  cask "tailscale"
-  cask "obsidian"
-  cask "bitwarden"
-  cask "obs"
+  # browsers
+  cask "arc"
+  cask "google-chrome"
+  cask "firefox"
 
-  # coding
+  # terminal & editors
+  cask "iterm2"
+  cask "visual-studio-code"
   cask "vscodium"
 
-  # fonts
-  cask "font-m-plus-code-latin"
+  # dev tools
+  cask "orbstack"
+  cask "jetbrains-toolbox"
+  cask "polypane"
+
+  # ai
+  cask "claude"
+  cask "claude-code"
+
+  # communication
+  cask "slack"
+  cask "discord"
+  cask "telegram"
+  cask "whatsapp"
+  cask "teamspeak-client@beta"
 
   # rogue amoeba
   cask "audio-hijack"
@@ -55,27 +82,45 @@ if OS.mac?
   cask "piezo"
   cask "soundsource"
 
-  # chat clients
-  cask "discord"
-  cask "telegram"
+  # media & games
+  cask "plex"
+  cask "stolendata-mpv"
+  cask "spotify"
+  cask "obs"
+  cask "steam"
+  cask "multimc"
+  cask "temurin"       # java runtime for multimc
 
-  # paid
+  # design & fabrication
+  cask "affinity"
+  cask "blender"
+  cask "inkscape"
+  cask "drawio"
+  cask "rhino-app"
+  cask "bambu-studio"
+  cask "kicad"
+
+  # productivity
+  cask "libreoffice"
+
+  # system utilities
+  cask "raycast"
+  cask "bitwarden"
+  cask "betterdisplay"
+  cask "obsidian"
+  cask "tailscale-app"
+  cask "utm"
   cask "imazing"
   cask "mouseless"
-  cask "claude-code"
-
-  # misc
-  cask "raycast"
-  cask "affinity"
-  cask "raspberry-pi-imager"
-  cask "angry-ip-scanner"
-  cask "slack"
-  cask "cyberduck"
-  cask "balenaetcher"
   cask "keyboardcleantool"
+  cask "anydesk"
+  cask "cyberduck"
 
-  # media
-  cask "plex"
-  cask "mpv"
-  cask "spotify"
+  # imaging & networking
+  cask "raspberry-pi-imager"
+  cask "balenaetcher"
+  cask "angry-ip-scanner"
+
+  # fonts
+  cask "font-m-plus-code-latin"
 end
