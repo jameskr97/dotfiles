@@ -15,6 +15,18 @@ Host github.com
 Host nas
 	HostName fileserver
 
+Host coco1
+    HostName cocosci-1.mit.edu
+    User jameskr
+    PubKeyAuthentication yes
+    IdentityFile ~/.ssh/mit
+
+Host coco2
+    Hostname cocosci-2.mit.edu
+    User jameskr
+    PubKeyAuthentication yes
+    IdentityFile ~/.ssh/mit
+
 {{- if .personal }}
 Host kevin
 	User james
