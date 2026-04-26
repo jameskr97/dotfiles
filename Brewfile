@@ -8,6 +8,9 @@ brew "bun"
 brew "musl-cross"
 cask "aerospace"
 
+# updated system utilities
+brew "openssh"
+
 # modern cli replacements
 brew "eza"           # ls
 brew "zoxide"        # cd
@@ -20,6 +23,7 @@ brew "tmux"
 brew "fzf"
 brew "direnv"
 brew "neovim"
+brew "ykman"
 
 # tui apps
 brew "lazygit"
@@ -46,6 +50,8 @@ brew "tldr"
 brew "asciinema"
 brew "borgbackup"
 brew "borgmatic"
+brew "spicetify-cli"
+brew "hcloud" # hetzner cli
 
 # macOS apps
 if OS.mac?
@@ -53,9 +59,11 @@ if OS.mac?
   cask "arc"
   cask "google-chrome"
   cask "firefox"
+  cask "zen"
 
   # terminal & editors
   cask "iterm2"
+  cask "wezterm"
   cask "visual-studio-code"
   cask "vscodium"
 
@@ -86,6 +94,7 @@ if OS.mac?
   # media & games
   cask "plex"
   cask "stolendata-mpv"
+  cask "vlc"
   cask "spotify"
   cask "obs"
   cask "steam"
@@ -100,9 +109,12 @@ if OS.mac?
   cask "rhino-app"
   cask "bambu-studio"
   cask "kicad"
+  cask "inkstitch"
 
   # productivity
   cask "libreoffice"
+  cask "skim"
+  cask "anki"
 
   # system utilities
   cask "raycast"
@@ -116,6 +128,7 @@ if OS.mac?
   cask "keyboardcleantool"
   cask "anydesk"
   cask "cyberduck"
+  cask "yubico-authenticator"
 
   # imaging & networking
   cask "raspberry-pi-imager"
