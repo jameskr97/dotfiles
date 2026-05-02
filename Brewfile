@@ -2,11 +2,13 @@
 tap "oven-sh/bun"
 tap "filosottile/musl-cross"
 tap "nikitabobko/tap"
+tap "deskflow/tap"
 
 # brews from taps
 brew "bun"
 brew "musl-cross"
 cask "aerospace"
+cask "deskflow"
 
 # updated system utilities
 brew "openssh"
@@ -24,6 +26,7 @@ brew "fzf"
 brew "direnv"
 brew "neovim"
 brew "ykman"
+brew "ranger"
 
 # tui apps
 brew "lazygit"
@@ -41,6 +44,7 @@ brew "pipx"
 brew "typst"
 brew "julia"
 brew "postgresql@18"
+brew "d2"
 
 # utilities
 brew "chezmoi"
@@ -52,6 +56,9 @@ brew "borgbackup"
 brew "borgmatic"
 brew "spicetify-cli"
 brew "hcloud" # hetzner cli
+brew "opensc" # smart card utilities
+brew "yubico-piv-tool"
+
 
 # macOS apps
 if OS.mac?
@@ -75,6 +82,7 @@ if OS.mac?
   # ai
   cask "claude"
   cask "claude-code"
+  cask "codex"
 
   # communication
   cask "slack"
@@ -110,11 +118,14 @@ if OS.mac?
   cask "bambu-studio"
   cask "kicad"
   cask "inkstitch"
+  cask "autodesk-fusion"
 
   # productivity
   cask "libreoffice"
   cask "skim"
   cask "anki"
+  cask "rustdesk"
+  cask "xquartz"
 
   # system utilities
   cask "raycast"
