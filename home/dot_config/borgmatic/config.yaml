@@ -61,4 +61,4 @@ commands:
         - ~/.config/borgmatic/notify-complete.sh
     - after: error
       run:
-        - ~/.config/borgmatic/notify-error.sh "{error}" "{output}"
+        - BORG_ERROR='{error}' BORG_OUTPUT='{output}' ~/.config/borgmatic/notify-error.sh

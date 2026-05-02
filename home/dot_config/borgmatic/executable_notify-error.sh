@@ -1,8 +1,8 @@
 #!/bin/bash
 # Notify when borgmatic backup fails
 
-error="${1:-Backup failed}"
-output="${2:-}"
+error="${BORG_ERROR:-Backup failed}"
+output="${BORG_OUTPUT:-}"
 
 message="$error"
 if [[ -n "$output" ]]; then
