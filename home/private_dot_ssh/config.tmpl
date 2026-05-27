@@ -33,3 +33,17 @@ Host kevin
 	HostName {{ (bitwardenFields "item" "9c931028-7d6e-4f8c-ad92-c75fab672155").ip.value }}
 	IdentityFile ~/.ssh/kevin
 {{- end }}
+
+Host pwn
+	User hacker
+	Hostname dojo.pwn.college
+	IdentityFile ~/.ssh/pwn
+
+Host orcd-login-login00
+	Hostname orcd-login002.mit.edu
+
+Host engaging
+	User jameskr
+	Hostname orcd-login.mit.edu
+	IdentityFile ~/.ssh/mit
+
